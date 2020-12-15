@@ -1,0 +1,12 @@
+
+<div class="card" *ngIf="beer; else emptyBlock">
+  <img [src]="beer.imageUrl"/>
+  <h3> {{ beer.name }}</h3>
+  <p class="description">
+    {{ beer.description }}
+  </p>
+</div>
+
+<ng-template #emptyBlock>
+  <div class="card"></div>
+</ng-template>

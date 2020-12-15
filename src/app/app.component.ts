@@ -8,8 +8,8 @@ import {PageEvent} from '@angular/material/paginator';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  beers: Beer[] = [];
 
+  beers: Beer[] = [];
   pageSize = 10;
   totalSize = 0;
 

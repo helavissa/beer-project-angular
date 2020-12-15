@@ -7,7 +7,10 @@
                  (page)="fetchBeers($event)">
   </mat-paginator>
 
+  <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+    <app-beer-card fxFlex="0 1 calc(20% - 15px)"
+                   *ngFor="let beer of beers" [beer]="beer"
+    ></app-beer-card>
+  </div>
 
 </div>
-
-

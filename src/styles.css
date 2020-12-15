@@ -16,9 +16,8 @@ body {
 }
 
 .container {
-  max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 3rem;
 }
 
 a {
@@ -78,4 +77,25 @@ textarea {
 
 hr {
   margin: .5rem 0;
+}
+
+.beer-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card{
+  border: solid 1px #ccc;
+}
+
+.card img{
+  max-height: 300px;
+  max-width: 90%;
+  height: auto;
+  width: auto;
+}
+
+.description{
+  max-height: 200px;
+  overflow: auto;
 }

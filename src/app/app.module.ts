@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     HttpClientModule,
     MatPaginatorModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

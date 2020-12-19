@@ -1,6 +1,6 @@
 
 <div class="card" *ngIf="beer; else emptyBlock">
-  <mat-icon class="favourite-icon">star</mat-icon>
+  <mat-icon class="favourite-icon" (click)="toggleBeer()">star</mat-icon>
   <img [src]="beer.imageUrl"/>
   <h3> {{ beer.name }}</h3>
   <p class="description">

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Beer} from '../beers.service';
+import {Beer, BeersService} from '../beers.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 
 @Component({
   selector: 'app-beer-card',
@@ -8,11 +10,17 @@ import {Beer} from '../beers.service';
 })
 export class BeerCardComponent implements OnInit {
 
-  @Input() beer?: Beer;
+  @Input() beer?: Beer; // TODO: is ? valid
+  @Input() userId?: string;
 
-  constructor() { }
+  constructor(private beerService: BeersService) { }
 
   ngOnInit(): void {
   }
+
+  toggleBeer(): void {
+    this.beerService.toggleBeer(this.userId, this.beer?.id);
+  }
+
 
 }

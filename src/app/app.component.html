@@ -2,8 +2,12 @@
 
   <h3 *ngIf="user">Hello {{ user.firstName }}</h3>
 
-  <button type="submit" class="btn btn-primary login-button" (click)="signInWithGoogle()">
+  <button *ngIf="!user" type="submit" class="btn btn-primary login-button" (click)="signInWithGoogle()">
     <i class="icon-user icon-white"></i> Sign in
+  </button>
+
+  <button *ngIf="user" type="submit" class="btn btn-primary login-button" (click)="signOut()">
+    <i class="icon-user icon-white"></i> Sign out
   </button>
 
   <h1>Beers</h1>
@@ -16,7 +20,10 @@
 
   <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
     <app-beer-card fxFlex="0 1 calc(20% - 15px)"
-                   *ngFor="let beer of beers" [beer]="beer" [userId]="user?.id"
+                   *ngFor="let beer of beers" [beer]="beer"
+                   [userId]="user?.id"
+                   [isFavourite]="favourites.includes(beer.id)"
+                   (favouriteChange)="fetchFavourites(user?.id)"
     ></app-beer-card>
   </div>
 

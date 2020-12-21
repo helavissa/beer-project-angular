@@ -27,7 +27,6 @@ export class BeersService {
   constructor(private httpClient: HttpClient) { }
 
   fetchBeers(page: number, pageSize: number ): Observable<BeersResult>{
-
     return this.httpClient.get<BeersResult>(`http://localhost:8080/beers?page=${page}&size=${pageSize}&sort=id,asc`)
       .pipe(
         map(response => {
@@ -39,15 +38,12 @@ export class BeersService {
         delay(500));
   }
 
-  toggleBeer(userId?: string, beerId?: number): void{
+  fetchFavourites(userId?: string): Observable<number[]>{
+    return this.httpClient.get<number[]>(`http://localhost:8080/user/${userId}/get-favourites`);
+  }
 
-    this.httpClient.post(`http://localhost:8080/user/${userId}/toggle-beer?beerId=${beerId}`, null)
-      .subscribe(response => {
-        console.log('response', response);
-      },
-        error => {
-            this.handleError(error);
-        });
+  toggleBeer(userId?: string, beerId?: number): Observable<number>{ // TODO: error handling?
+    return this.httpClient.post<number>(`http://localhost:8080/user/${userId}/toggle-beer?beerId=${beerId}`, null);
   }
 
   handleError(error: HttpErrorResponse): void {

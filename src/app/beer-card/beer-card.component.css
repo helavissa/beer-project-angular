@@ -2,3 +2,7 @@
   float:right;
   cursor: pointer;
 }
+
+.favourite-icon.pink{
+  color: deeppink;
+}

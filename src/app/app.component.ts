@@ -3,7 +3,6 @@ import {Beer, BeersService} from './beers.service';
 import {PageEvent} from '@angular/material/paginator';
 import {SocialAuthService, SocialUser} from 'angularx-social-login';
 import {GoogleLoginProvider} from 'angularx-social-login';
-import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -16,22 +15,18 @@ export class AppComponent implements OnInit{
   pageSize = 10;
   totalSize = 0;
   user?: SocialUser;
+  favourites: number[] = [];
 
   constructor(private beerService: BeersService,
-              private authService: SocialAuthService,
-              private cookieService: CookieService) {}
+              private authService: SocialAuthService) {}
 
   ngOnInit(): void {
     this.fetchBeers();
-    this.authService.authState.subscribe((user) => {
+    this.authService.authState.subscribe((user) => { // set user to specified user or null in case of logout
       this.user = user;
-      this.cookieService.set('user', JSON.stringify(user));
+      this.fetchFavourites(user?.id);
     });
 
-    if (this.cookieService.get('user') && !this.user){
-      this.user = JSON.parse(this.cookieService.get('user'));
-    }
-    console.log('user', this.user);
   }
 
   fetchBeers(event?: PageEvent): void {
@@ -41,6 +36,15 @@ export class AppComponent implements OnInit{
         this.beers = beersResult.content;
         this.totalSize = beersResult.totalElements;
     });
+  }
+
+  fetchFavourites(userId?: string): void {
+    if (userId){
+      this.beerService.fetchFavourites(userId)
+        .subscribe(result => {
+          this.favourites = result;
+        });
+    }
   }
 
   signInWithGoogle(): void {

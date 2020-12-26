@@ -12,19 +12,36 @@
 
   <h1>Beers</h1>
 
-  <mat-paginator [length]="totalSize"
-                 [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="fetchBeers($event)">
-  </mat-paginator>
-
-  <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
-    <app-beer-card fxFlex="0 1 calc(20% - 15px)"
-                   *ngFor="let beer of beers" [beer]="beer"
-                   [userId]="user?.id"
-                   [isFavourite]="favourites.includes(beer.id)"
-                   (favouriteChange)="fetchFavourites(user?.id)"
-    ></app-beer-card>
+  <div class="form-group has-search">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text"
+           class="form-control"
+           placeholder="Search by name or description"
+           [(ngModel)]="search"
+           (keyup.enter)="searchBeers()">
   </div>
+
+
+  <div *ngIf="error; else beersBlock" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <ng-template #beersBlock>
+    <mat-paginator [length]="totalSize"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   [pageIndex]="pageIndex"
+                   (page)="fetchBeers($event)">
+    </mat-paginator>
+
+    <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+      <app-beer-card fxFlex="0 1 calc(20% - 15px)"
+                     *ngFor="let beer of beers" [beer]="beer"
+                     [userId]="user?.id"
+                     [isFavourite]="favourites.includes(beer.id)"
+                     (favouriteChange)="fetchFavourites(user?.id)"
+      ></app-beer-card>
+    </div>
+  </ng-template>
 
 </div>

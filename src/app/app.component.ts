@@ -14,8 +14,11 @@ export class AppComponent implements OnInit{
   beers: Beer[] = [];
   pageSize = 10;
   totalSize = 0;
+  pageIndex = 0;
   user?: SocialUser;
   favourites: number[] = [];
+  error = '';
+  search = '';
 
   constructor(private beerService: BeersService,
               private authService: SocialAuthService) {}
@@ -30,12 +33,17 @@ export class AppComponent implements OnInit{
   }
 
   fetchBeers(event?: PageEvent): void {
-    this.beerService.fetchBeers(event ? event.pageIndex : 0,
-                              event ? event.pageSize : this.pageSize)
+    this.pageIndex = event ? event.pageIndex : this.pageIndex;
+    this.beerService.fetchBeers(this.pageIndex,
+                              event ? event.pageSize : this.pageSize,
+                                      this.search)
       .subscribe(beersResult => {
         this.beers = beersResult.content;
         this.totalSize = beersResult.totalElements;
-    });
+      },
+        error => {
+          this.error = error.message;
+        });
   }
 
   fetchFavourites(userId?: string): void {
@@ -53,6 +61,11 @@ export class AppComponent implements OnInit{
 
   signOut(): void {
     this.authService.signOut();
+  }
+
+  searchBeers(): void {
+    this.pageIndex = 0;
+    this.fetchBeers();
   }
 
 }

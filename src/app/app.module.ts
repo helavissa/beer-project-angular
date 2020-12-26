@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { CookieService } from 'ngx-cookie-service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CookieService } from 'ngx-cookie-service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatIconModule,
-    SocialLoginModule
+    MatFormFieldModule,
+    SocialLoginModule,
+    FormsModule
   ],
   providers: [
     {

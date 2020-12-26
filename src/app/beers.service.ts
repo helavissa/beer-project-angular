@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, delay, map} from 'rxjs/operators';
 
@@ -26,8 +26,17 @@ export class BeersService {
 
   constructor(private httpClient: HttpClient) { }
 
-  fetchBeers(page: number, pageSize: number ): Observable<BeersResult>{
-    return this.httpClient.get<BeersResult>(`http://localhost:8080/beers?page=${page}&size=${pageSize}&sort=id,asc`)
+  fetchBeers(page: number, pageSize: number, search?: string ): Observable<BeersResult>{
+    let params = new HttpParams();
+    params = params.append('page', page + '');
+    params = params.append('size', pageSize + '');
+    params = params.append('sort', 'id,asc');
+    if (search) {
+      params = params.append('searchStr', search);
+    }
+
+    return this.httpClient.get<BeersResult>(
+      `http://localhost:8080/beers`, {params})
       .pipe(
         map(response => {
           return {
